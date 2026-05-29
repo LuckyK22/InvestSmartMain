@@ -224,16 +224,14 @@ export default function Navbar() {
                     style={{
                       fontFamily: '"Plus Jakarta Sans", sans-serif',
                       fontWeight: 700,
-                      fontSize: scrolled ? '8px' : '10px',
-                      letterSpacing: '6.5px',
+                      fontSize: scrolled ? '7px' : '10px',
+                      letterSpacing: scrolled ? '3px' : '6.5px',
                       color: 'var(--paper)',
                       lineHeight: 1,
                       textTransform: 'uppercase',
-                      overflow: 'hidden',
-                      maxHeight: '14px',
-                      marginBottom: scrolled ? '0px' : '3px',
-                      transition: 'opacity .3s ease, max-height .3s cubic-bezier(.2,.7,.2,1), margin-bottom .3s ease',
                       marginTop: scrolled ? '2px' : '8px',
+                      marginBottom: scrolled ? '0px' : '3px',
+                      transition: 'font-size .3s ease, letter-spacing .3s ease, margin .3s ease',
                     }}
                   >
                     STOCK BROKERS
