@@ -200,7 +200,7 @@ export default function Navbar() {
                   style={{
                     fontFamily: '"Plus Jakarta Sans", sans-serif',
                     fontWeight: 700,
-                    fontSize: scrolled ? '17px' : '24px',
+                    fontSize: scrolled ? '17px' : '20px',
                     lineHeight: 1,
                     letterSpacing: '-0.015em',
                     color: 'var(--paper)',
