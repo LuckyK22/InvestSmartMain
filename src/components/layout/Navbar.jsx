@@ -209,7 +209,7 @@ export default function Navbar() {
                   style={{
                     fontFamily: '"Plus Jakarta Sans", sans-serif',
                     fontWeight: 700,
-                    fontSize: scrolled ? '15px' : isMobile ? '17px' : '24px',
+                    fontSize: scrolled ? '15px' : isMobile ? '17px' : '18px',
                     lineHeight: 1,
                     letterSpacing: '-0.015em',
                     color: 'var(--paper)',
@@ -223,8 +223,8 @@ export default function Navbar() {
                   style={{
                     fontFamily: '"Plus Jakarta Sans", sans-serif',
                     fontWeight: 700,
-                    fontSize: scrolled ? '7px' : isMobile ? '8px' : '10px',
-                    letterSpacing: scrolled ? '3px' : isMobile ? '3.5px' : '6.5px',
+                    fontSize: scrolled ? '7px' : isMobile ? '8px' : '7px',
+                    letterSpacing: scrolled ? '3px' : isMobile ? '3.5px' : '5.2px',
                     color: 'var(--paper)',
                     lineHeight: 1,
                     textTransform: 'uppercase',
