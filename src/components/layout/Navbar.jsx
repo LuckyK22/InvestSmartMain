@@ -59,8 +59,8 @@ function NavItem({ item, scrolled }) {
 
   const linkStyle = {
     color: 'oklch(92% 0.010 78)',
-    padding: scrolled ? '5px 11px' : '6px 12px',
-    fontSize: scrolled ? '16px' : '17px',
+    padding: scrolled ? '4px 8px' : '5px 9px',
+    fontSize: scrolled ? '14px' : '15px',
     fontWeight: 600,
     borderRadius: '4px',
     letterSpacing: '0.01em',
@@ -68,7 +68,8 @@ function NavItem({ item, scrolled }) {
     cursor: 'pointer',
     display: 'inline-flex',
     alignItems: 'center',
-    gap: '6px',
+    gap: '5px',
+    whiteSpace: 'nowrap',
   }
 
   if (!item.dropdown) {
@@ -136,6 +137,9 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [mobileExpanded, setMobileExpanded] = useState(null)
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== 'undefined' ? window.innerWidth < 1024 : false
+  )
 
   useEffect(() => {
     let raf = 0
@@ -152,11 +156,17 @@ export default function Navbar() {
   }, [])
 
   useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth < 1024)
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
+
+  useEffect(() => {
     document.body.style.overflow = mobileOpen ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
   }, [mobileOpen])
 
-  const headerHeight = scrolled ? '65px' : '100px'
+  const headerHeight = scrolled ? '60px' : isMobile ? '68px' : '100px'
 
   return (
     <>
@@ -179,19 +189,18 @@ export default function Navbar() {
           }}
         >
           <div
-            className="mx-auto px-8 flex items-center justify-between gap-6 relative"
+            className="mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3 lg:gap-4 relative"
             style={{ height: headerHeight, transition: 'height .3s cubic-bezier(.2,.7,.2,1)' }}
           >
 
-
             {/* Logo */}
-            <a href="/" className="flex items-center gap-2.5 shrink-0">
+            <a href="/" className="flex items-center gap-2 sm:gap-2.5 shrink-0">
               <img
                 src={logo1}
                 alt="InvestSmart"
                 className="w-auto object-contain"
                 style={{
-                  height: scrolled ? '28px' : '60px',
+                  height: scrolled ? '26px' : isMobile ? '36px' : '60px',
                   transition: 'height .3s ease',
                 }}
               />
@@ -200,37 +209,36 @@ export default function Navbar() {
                   style={{
                     fontFamily: '"Plus Jakarta Sans", sans-serif',
                     fontWeight: 700,
-                    fontSize: scrolled ? '17px' : '20px',
+                    fontSize: scrolled ? '15px' : isMobile ? '17px' : '24px',
                     lineHeight: 1,
                     letterSpacing: '-0.015em',
                     color: 'var(--paper)',
                     transition: 'font-size .3s ease',
-                    borderBottom: "1px solid var(--gold)",
+                    borderBottom: '1px solid var(--gold)',
                   }}
                 >
                   INVEST<span style={{ color: 'var(--gold-deep)' }}> SMART</span>
                 </span>
-                <span
-                  style={{
-                    fontFamily: '"Plus Jakarta Sans", sans-serif',
-                    fontWeight: 700,
-                    // fontSize: '12px',
-                    fontSize: scrolled ? '8px' : '10px',
-                    letterSpacing: '6.5px',
-                    color: 'var(--paper)',
-                    lineHeight: 1,
-                    textTransform: 'uppercase',
-                    overflow: 'hidden',
-                    // opacity: scrolled ? 0 : 1,
-                    maxHeight: scrolled ? '14px' : '14px',
-                    marginBottom: scrolled ? '0px' : '3px',
-                    transition: 'opacity .3s ease, max-height .3s cubic-bezier(.2,.7,.2,1), margin-bottom .3s ease',
-                    marginTop: scrolled ? '2px' : '8px',
-                  }}
-                >
-                  STOCK BROKERS
-                </span>
-
+                {!isMobile && (
+                  <span
+                    style={{
+                      fontFamily: '"Plus Jakarta Sans", sans-serif',
+                      fontWeight: 700,
+                      fontSize: scrolled ? '8px' : '10px',
+                      letterSpacing: '6.5px',
+                      color: 'var(--paper)',
+                      lineHeight: 1,
+                      textTransform: 'uppercase',
+                      overflow: 'hidden',
+                      maxHeight: '14px',
+                      marginBottom: scrolled ? '0px' : '3px',
+                      transition: 'opacity .3s ease, max-height .3s cubic-bezier(.2,.7,.2,1), margin-bottom .3s ease',
+                      marginTop: scrolled ? '2px' : '8px',
+                    }}
+                  >
+                    STOCK BROKERS
+                  </span>
+                )}
               </div>
             </a>
 
@@ -278,11 +286,11 @@ export default function Navbar() {
             {/* Mobile toggle */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="lg:hidden w-9 h-9 rounded-lg flex items-center justify-center transition-colors"
-              style={{ background: 'oklch(0% 0 0 / .10)', color: 'var(--ink)' }}
+              className="lg:hidden w-10 h-10 rounded-lg flex items-center justify-center transition-colors"
+              style={{ background: 'oklch(100% 0 0 / .12)', color: 'var(--paper)' }}
               aria-label="Toggle menu"
             >
-              {mobileOpen ? <X size={18} /> : <Menu size={18} />}
+              {mobileOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
         </header>
@@ -300,7 +308,7 @@ export default function Navbar() {
           >
             <div
               className="absolute inset-0 backdrop-blur-sm"
-              style={{ background: 'oklch(22% 0.110 265 / .45)' }}
+              style={{ background: 'oklch(22% 0.110 265 / .50)' }}
               onClick={() => setMobileOpen(false)}
             />
             <motion.div
@@ -308,39 +316,62 @@ export default function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              className="absolute right-0 top-0 bottom-0 w-72 flex flex-col overflow-y-auto"
-              style={{ background: 'var(--royal-deep)', borderLeft: '1px solid oklch(100% 0 0 / .1)' }}
+              className="absolute right-0 top-0 bottom-0 w-full xs:w-80 sm:w-80 flex flex-col overflow-y-auto"
+              style={{
+                maxWidth: '320px',
+                background: 'var(--royal-deep)',
+                borderLeft: '1px solid oklch(100% 0 0 / .1)',
+              }}
             >
-              <div className="flex items-center justify-between p-6 pb-4">
-                <span style={{ color: 'var(--paper)', fontWeight: 700 }}>Menu</span>
+              {/* Mobile menu header */}
+              <div className="flex items-center justify-between px-5 py-4" style={{ borderBottom: '1px solid oklch(100% 0 0 / .1)' }}>
+                <a href="/" className="flex items-center gap-2" onClick={() => setMobileOpen(false)}>
+                  <img src={logo1} alt="InvestSmart" className="w-auto object-contain" style={{ height: '30px' }} />
+                  <span
+                    style={{
+                      fontFamily: '"Plus Jakarta Sans", sans-serif',
+                      fontWeight: 700,
+                      fontSize: '16px',
+                      color: 'var(--paper)',
+                      letterSpacing: '-0.015em',
+                    }}
+                  >
+                    INVEST<span style={{ color: 'var(--gold-deep)' }}> SMART</span>
+                  </span>
+                </a>
                 <button
                   onClick={() => setMobileOpen(false)}
-                  style={{ color: 'oklch(80% 0.020 78)' }}
+                  className="w-9 h-9 rounded-lg flex items-center justify-center"
+                  style={{ background: 'oklch(100% 0 0 / .10)', color: 'var(--paper)' }}
+                  aria-label="Close menu"
                 >
-                  <X size={20} />
+                  <X size={18} />
                 </button>
               </div>
 
-              <div className="flex-1 px-4 pb-4 flex flex-col gap-0.5">
+              {/* Nav items */}
+              <div className="flex-1 px-3 py-3 flex flex-col gap-0.5 overflow-y-auto">
                 {navLinks.map(item => (
                   <div key={item.label}>
                     {item.dropdown ? (
                       <>
                         <button
                           onClick={() => setMobileExpanded(mobileExpanded === item.label ? null : item.label)}
-                          className="w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold text-left"
+                          className="w-full flex items-center justify-between px-4 py-3.5 rounded-xl text-[15px] font-semibold text-left"
                           style={{
-                            color: 'oklch(86% 0.020 78)',
+                            color: 'oklch(90% 0.015 78)',
                             background: mobileExpanded === item.label ? 'oklch(100% 0 0 / .08)' : '',
                             transition: 'background .18s ease',
                           }}
                         >
                           {item.label}
                           <ChevronDown
-                            size={14}
+                            size={15}
                             style={{
+                              flexShrink: 0,
                               transform: mobileExpanded === item.label ? 'rotate(180deg)' : '',
                               transition: 'transform .2s ease',
+                              opacity: 0.6,
                             }}
                           />
                         </button>
@@ -353,7 +384,7 @@ export default function Navbar() {
                               transition={{ duration: 0.25 }}
                               className="overflow-hidden"
                             >
-                              <div className="pl-4 pb-2 flex flex-col gap-0.5">
+                              <div className="pl-3 pb-1 flex flex-col gap-0.5">
                                 {item.dropdown.map(sub => (
                                   <a
                                     key={sub.label}
@@ -361,11 +392,19 @@ export default function Navbar() {
                                     target={sub.external ? '_blank' : undefined}
                                     rel={sub.external ? 'noopener noreferrer' : undefined}
                                     onClick={() => setMobileOpen(false)}
-                                    className="px-4 py-2.5 rounded-lg text-sm"
-                                    style={{ color: 'oklch(76% 0.020 78)' }}
+                                    className="flex items-center gap-2 px-4 py-3 rounded-lg text-[14px]"
+                                    style={{ color: 'oklch(72% 0.020 78)', transition: 'color .15s ease' }}
+                                    onTouchStart={e => { e.currentTarget.style.color = 'var(--gold)' }}
+                                    onTouchEnd={e => { e.currentTarget.style.color = 'oklch(72% 0.020 78)' }}
                                     onMouseEnter={e => { e.currentTarget.style.color = 'var(--gold)' }}
-                                    onMouseLeave={e => { e.currentTarget.style.color = 'oklch(76% 0.020 78)' }}
+                                    onMouseLeave={e => { e.currentTarget.style.color = 'oklch(72% 0.020 78)' }}
                                   >
+                                    <span
+                                      style={{
+                                        width: '4px', height: '4px', borderRadius: '50%',
+                                        background: 'var(--gold-deep)', flexShrink: 0, opacity: 0.7,
+                                      }}
+                                    />
                                     {sub.label}
                                   </a>
                                 ))}
@@ -380,10 +419,12 @@ export default function Navbar() {
                         target={item.external ? '_blank' : undefined}
                         rel={item.external ? 'noopener noreferrer' : undefined}
                         onClick={() => setMobileOpen(false)}
-                        className="block px-4 py-3 rounded-xl text-sm font-semibold"
-                        style={{ color: 'oklch(86% 0.020 78)', transition: 'background .18s ease, color .18s ease' }}
+                        className="block px-4 py-3.5 rounded-xl text-[15px] font-semibold"
+                        style={{ color: 'oklch(90% 0.015 78)', transition: 'background .18s ease, color .18s ease' }}
+                        onTouchStart={e => { e.currentTarget.style.background = 'oklch(100% 0 0 / .08)'; e.currentTarget.style.color = 'var(--gold)' }}
+                        onTouchEnd={e => { e.currentTarget.style.background = ''; e.currentTarget.style.color = 'oklch(90% 0.015 78)' }}
                         onMouseEnter={e => { e.currentTarget.style.background = 'oklch(100% 0 0 / .08)'; e.currentTarget.style.color = 'var(--gold)' }}
-                        onMouseLeave={e => { e.currentTarget.style.background = ''; e.currentTarget.style.color = 'oklch(86% 0.020 78)' }}
+                        onMouseLeave={e => { e.currentTarget.style.background = ''; e.currentTarget.style.color = 'oklch(90% 0.015 78)' }}
                       >
                         {item.label}
                       </a>
@@ -392,7 +433,33 @@ export default function Navbar() {
                 ))}
               </div>
 
-              <div className="p-6 pt-4" style={{ borderTop: '1px solid oklch(100% 0 0 / .1)' }}>
+              {/* Mobile menu footer */}
+              <div className="px-5 py-5 flex flex-col gap-3" style={{ borderTop: '1px solid oklch(100% 0 0 / .1)' }}>
+                {/* Language + Help */}
+                <div className="flex items-center justify-between text-[13px]" style={{ color: 'oklch(70% 0.015 78)' }}>
+                  <div className="flex items-center gap-3">
+                    <a href="#" style={{ transition: 'color .15s ease' }}
+                      onMouseEnter={e => { e.currentTarget.style.color = 'var(--paper)' }}
+                      onMouseLeave={e => { e.currentTarget.style.color = '' }}
+                    >EN</a>
+                    <span style={{ opacity: 0.3 }}>|</span>
+                    <a href="#" style={{ transition: 'color .15s ease' }}
+                      onMouseEnter={e => { e.currentTarget.style.color = 'var(--paper)' }}
+                      onMouseLeave={e => { e.currentTarget.style.color = '' }}
+                    >हिंदी</a>
+                  </div>
+                  <a
+                    href="https://myinvestsmart.in/contact.php"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ transition: 'color .15s ease' }}
+                    onMouseEnter={e => { e.currentTarget.style.color = 'var(--paper)' }}
+                    onMouseLeave={e => { e.currentTarget.style.color = '' }}
+                  >
+                    Help &amp; Support
+                  </a>
+                </div>
+                {/* CTA */}
                 <a
                   href="https://myinvestsmart.in/accountopening.php"
                   target="_blank"
