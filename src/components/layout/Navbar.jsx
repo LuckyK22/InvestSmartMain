@@ -219,24 +219,22 @@ export default function Navbar() {
                 >
                   INVEST<span style={{ color: 'var(--gold-deep)' }}> SMART</span>
                 </span>
-                {!isMobile && (
-                  <span
-                    style={{
-                      fontFamily: '"Plus Jakarta Sans", sans-serif',
-                      fontWeight: 700,
-                      fontSize: scrolled ? '7px' : '10px',
-                      letterSpacing: scrolled ? '3px' : '6.5px',
-                      color: 'var(--paper)',
-                      lineHeight: 1,
-                      textTransform: 'uppercase',
-                      marginTop: scrolled ? '2px' : '8px',
-                      marginBottom: scrolled ? '0px' : '3px',
-                      transition: 'font-size .3s ease, letter-spacing .3s ease, margin .3s ease',
-                    }}
-                  >
-                    STOCK BROKERS
-                  </span>
-                )}
+                <span
+                  style={{
+                    fontFamily: '"Plus Jakarta Sans", sans-serif',
+                    fontWeight: 700,
+                    fontSize: scrolled ? '7px' : isMobile ? '8px' : '10px',
+                    letterSpacing: scrolled ? '3px' : isMobile ? '3.5px' : '6.5px',
+                    color: 'var(--paper)',
+                    lineHeight: 1,
+                    textTransform: 'uppercase',
+                    marginTop: scrolled ? '2px' : isMobile ? '4px' : '8px',
+                    marginBottom: scrolled ? '0px' : '2px',
+                    transition: 'font-size .3s ease, letter-spacing .3s ease, margin .3s ease',
+                  }}
+                >
+                  STOCK BROKERS
+                </span>
               </div>
             </a>
 

@@ -16,7 +16,7 @@ export default function HeroSection() {
     <div style={{ minHeight: 'calc(100vh - 100px)', display: 'flex', flexDirection: 'column' }}>
       {/* ── Hero ── */}
       <section
-        style={{ background: 'var(--beige)', textAlign: 'center', overflow: 'visible', flex: 1, display: 'flex', alignItems: 'center', padding: '64px 0 56px' }}
+        style={{ background: 'var(--beige)', textAlign: 'center', overflow: 'visible', flex: 1, display: 'flex', alignItems: 'center', padding: 'clamp(32px, 6vw, 64px) 0 clamp(28px, 5vw, 56px)' }}
       >
         <div className="max-w-[1280px] mx-auto px-8 sm:px-5 w-full">
           <div className="flex flex-col items-center max-w-[1280px] mx-auto">
@@ -30,15 +30,16 @@ export default function HeroSection() {
               style={{
                 fontFamily: '"Plus Jakarta Sans", sans-serif',
                 fontWeight: 800,
-                fontSize: 'clamp(46px, 6.3vw, 78px)',
+                fontSize: 'clamp(30px, 6.3vw, 78px)',
                 lineHeight: 1.12,
                 letterSpacing: '-0.035em',
                 color: 'var(--ink)',
                 margin: 0,
+                textAlign: 'center',
               }}
             >
-              <span style={{ display: 'block', whiteSpace: 'nowrap' }}>Markets Need Access.</span>
-              <span className="gradient-text" style={{ display: '', whiteSpace: 'nowrap' }}>
+              <span style={{ display: 'block' }}>Markets Need Access.</span>
+              <span className="gradient-text" style={{ display: 'block' }}>
                 Wealth Needs Judgment.
               </span>
             </motion.h1>
@@ -50,11 +51,11 @@ export default function HeroSection() {
               animate="show"
               transition={{ duration: 0.6, delay: 0.15 }}
               style={{
-                fontSize: '18.5px',
-                lineHeight: 2,
+                fontSize: 'clamp(15px, 2.2vw, 18.5px)',
+                lineHeight: 1.85,
                 color: 'var(--ink-soft)',
                 maxWidth: '560px',
-                margin: '30px 0 0',
+                margin: 'clamp(18px, 3vw, 30px) 0 0',
               }}
             >
               Investsmart brings together capital-market experience, research-led thinking
